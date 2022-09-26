@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Meal;
+use App\Models\Category;
 
 class MealController extends Controller
 {
@@ -24,7 +25,9 @@ class MealController extends Controller
      */
     public function create()
     {
-        return view('meals.create');
+        $categories = Category::all();
+
+        return view('meals.create', compact('categories'));
     }
 
     /**
