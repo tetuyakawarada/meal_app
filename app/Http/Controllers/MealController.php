@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Meal;
 use App\Models\Category;
+use App\Http\Requests\MealRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class MealController extends Controller
 {
@@ -15,7 +18,11 @@ class MealController extends Controller
      */
     public function index()
     {
-        return view('meals.index');
+        $meals = Meal::all();
+
+        // dd($meals);
+
+        return view('meals.index', compact('meals'));
     }
 
     /**
@@ -33,12 +40,40 @@ class MealController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\MealRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MealRequest $request)
     {
-        //
+        $meal = new Meal($request->all());
+        $meal->user_id = $request->user()->id;
+
+        $file = $request->file('image');
+        $meal->image = date('YmdHis') . '_' . $file->getClientOriginalName();
+
+        // トランザクション開始
+        DB::beginTransaction();
+        try {
+            // 登録
+            $meal->save();
+
+            // 画像アップロード
+            if (!Storage::putFileAs('images/meals', $file, $meal->image)) {
+
+                // 例外を投げてロールバックさせる
+                throw new \Exception('画像ファイルの保存に失敗しました。');
+            }
+
+            // トランザクション終了(成功)
+            DB::commit();
+        } catch (\Exception $e) {
+            // トランザクション終了(失敗)
+            DB::rollback();
+            return back()->withInput()->withErrors($e->getMessage());
+        }
+
+        return redirect()
+            ->route('meals.show', $meal);
     }
 
     /**
@@ -66,11 +101,11 @@ class MealController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\MealRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MealRequest $request, $id)
     {
         //
     }
