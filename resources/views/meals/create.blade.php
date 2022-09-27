@@ -27,8 +27,6 @@
                     required placeholder="タイトル" value="{{ old('title') }}">
             </div>
 
-
-
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm mb-2" for="title">
                     カテゴリー
@@ -36,21 +34,12 @@
 
                 <div>
                     @foreach ($categories as $category)
-                        <label><input type="radio" name="category" value="{{ $category->id }}">
+                        <label><input type="radio" name="category_id" id='category' value="{{ $category->id }}">
                             {{ $category->category }}</label><br>
                     @endforeach
                 </div>
 
             </div>
-
-
-
-
-
-
-
-
-
 
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm mb-2" for="body">

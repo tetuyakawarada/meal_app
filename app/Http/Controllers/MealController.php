@@ -20,8 +20,6 @@ class MealController extends Controller
     {
         $meals = Meal::all();
 
-        // dd($meals);
-
         return view('meals.index', compact('meals'));
     }
 
@@ -46,7 +44,10 @@ class MealController extends Controller
     public function store(MealRequest $request)
     {
         $meal = new Meal($request->all());
+
         $meal->user_id = $request->user()->id;
+        $meal->category_id = $request->category_id;
+        // dd($meal);
 
         $file = $request->file('image');
         $meal->image = date('YmdHis') . '_' . $file->getClientOriginalName();

@@ -28,7 +28,6 @@ class MealRequest extends FormRequest
             'body' => 'required|string|max:2000',
             'image' => 'required|file|image|mimes:jpg,png',
             'category_id' => 'required',
-
         ];
     }
 }
