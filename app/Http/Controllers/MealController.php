@@ -74,7 +74,8 @@ class MealController extends Controller
         }
 
         return redirect()
-            ->route('meals.show', $meal);
+            ->route('meals.show', $meal)
+            ->with('notice', '記事を登録しました');
     }
 
     /**
