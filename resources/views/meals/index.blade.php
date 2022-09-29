@@ -11,8 +11,11 @@
                             {{ $meal->title }}</h2>
                         <h3>{{ $meal->user->name }}</h3>
                         <p class="text-sm mb-2 md:text-base font-normal text-gray-600">
-                            <span
-                                class="text-red-400 font-bold">{{ date('Y-m-d H:i:s', strtotime('-1 day')) < $meal->created_at ? 'NEW' : '' }}</span>
+                            <span class="font-bold">現在時刻: </span>
+                            <span class="text-red-400">{{ \Carbon\Carbon::now() }}</span>
+                            <br>
+                            <span class="font-bold">記事作成日:
+                                {{ date('Y-m-d H:i:s', strtotime('-1 day')) < $meal->created_at ? 'NEW' : '' }}</span>
                             {{ $meal->created_at }}
                         </p>
                         <img class="w-full mb-2" src="{{ $meal->image_url }}" alt="">

@@ -23,7 +23,7 @@
         <div class="flex flex-row text-center my-4">
             @can('update', $meal)
                 <a href="{{ route('meals.edit', $meal) }}"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                    class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
             @endcan
             @can('delete', $meal)
                 <form action="{{ route('meals.destroy', $meal) }}" method="post">
