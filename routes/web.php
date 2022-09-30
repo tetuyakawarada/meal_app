@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +29,15 @@ Route::resource('meals', MealController::class)
 Route::resource('meals', MealController::class)
     ->only(['show', 'index']);
 
+// いいねボタンのルーティング
+Route::resource('meals.likes', LikeController::class)
+    ->only(['store', 'destroy'])
+    ->middleware('auth');
 
-Route::post('/like/{mealId}', [LikeController::class, 'store']);
 
-Route::post('/unlike/{mealId}', [LikeController::class, 'destroy']);
 
+
+// Route::get('/like/{meal}', 'LikeController@nice')->name('like');
+// Route::get('/unlike/{meal}', 'LikeController@unnice')->name('unlike');
 
 require __DIR__ . '/auth.php';

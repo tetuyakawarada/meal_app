@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Meal;
 use App\Models\Category;
 use App\Http\Requests\MealRequest;
+use App\Models\Like;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 
 class MealController extends Controller
@@ -88,11 +90,15 @@ class MealController extends Controller
     public function show($id)
     {
         $meal = Meal::find($id);
-
-        return view('meals.show', compact('meal'));
+        // dd($meal);
+        $like = Like::where('user_id', Auth::id())->where('meal_id', $meal->id)->first();
+        // dd($like);
+        $like_count = Like::where('meal_id', $meal->id)->count();
+        // dd($like_count);
+        return view('meals.show', compact('meal', 'like', 'like_count'));
     }
 
-    /**
+    /**s
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
