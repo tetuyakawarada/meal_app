@@ -29,4 +29,9 @@ Route::resource('meals', MealController::class)
     ->only(['show', 'index']);
 
 
+Route::post('/like/{mealId}', [LikeController::class, 'store']);
+
+Route::post('/unlike/{mealId}', [LikeController::class, 'destroy']);
+
+
 require __DIR__ . '/auth.php';
