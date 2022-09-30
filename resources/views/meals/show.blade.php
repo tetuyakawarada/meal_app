@@ -16,6 +16,9 @@
                 <span class="font-bold">記事作成日:
                     {{ date('Y-m-d H:i:s', strtotime('-1 day')) < $meal->created_at ? 'NEW' : '' }}</span>
                 {{ $meal->created_at }}
+                <br>
+                <span class="font-bold">カテゴリー: </span>
+                {{ $meal->category->category }}
             </p>
             <img src="{{ $meal->image_url }}" alt="" class="mb-4">
             <p class="text-gray-700 text-base">{!! nl2br(e($meal->body)) !!}</p>
