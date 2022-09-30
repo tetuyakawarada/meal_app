@@ -100,8 +100,8 @@ class MealController extends Controller
      */
     public function edit($id)
     {
-        $meal = Meal::find($id);
         $categories = Category::all();
+        $meal = Meal::find($id);
         // dd($meal);
 
         return view('meals.edit', compact('meal', 'categories'));
@@ -117,7 +117,7 @@ class MealController extends Controller
     public function update(MealRequest $request, $id)
     {
         $meal = Meal::find($id);
-
+        $meal->category_id = $request->category_id;
         // dd($meal);
 
         if ($request->user()->cannot('update', $meal)) {

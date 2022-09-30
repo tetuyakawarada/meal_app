@@ -24,15 +24,11 @@
                 <div>
                     @foreach ($categories as $category)
                         <p>
-                            <input type="radio" name="category_id" id="category_id"
-                                value="{{ $category->id }}">{{ $category->category }}
+                            <label><input type="radio" name="category_id" id='category'
+                                    value="{{ $category->id }}"{{ old('category_id', $meal->category_id) == $category->id ? 'checked' : '' }}>
+                                {{ $category->category }}</label><br>
                         </p>
-
-                        {{-- <label><input type="radio" name="category_id" id='category'
-                                value="{{ $category->id }}"{{ old('category_id', $category->id) == $category->id ? 'checked' : '' }}>
-                            {{ $category->category }}</label><br> --}}
                     @endforeach
-
                 </div>
             </div>
 
