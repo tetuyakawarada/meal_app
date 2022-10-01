@@ -16,6 +16,9 @@
                 <span class="font-bold">記事作成日:
                     {{ date('Y-m-d H:i:s', strtotime('-1 day')) < $meal->created_at ? 'NEW' : '' }}</span>
                 {{ $meal->created_at }}
+                <br>
+                <span class="font-bold">カテゴリー: </span>
+                {{ $meal->category->category }}
             </p>
             <img src="{{ $meal->image_url }}" alt="" class="mb-4">
             <p class="text-gray-700 text-base">{!! nl2br(e($meal->body)) !!}</p>
@@ -34,5 +37,35 @@
                 </form>
             @endcan
         </div>
+
+
+
+        @auth
+            @if ($like)
+                <div
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-36 mr-2">
+                    <form action="{{ route('meals.likes.destroy', [$meal, $like]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="お気に入り削除">
+                    </form>
+                </div>
+            @else
+                <div
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-28 mr-2">
+                    <form action="{{ route('meals.likes.store', $meal) }}" method="post">
+                        @csrf
+                        <input type="submit" value="お気に入り">
+                    </form>
+                </div>
+            @endif
+            <div>お気に入り数：{{ $like_count }}</div>
+        @endauth
+
+
+
+
+
+
     </div>
 </x-app-layout>
